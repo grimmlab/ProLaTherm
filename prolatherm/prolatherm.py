@@ -62,7 +62,7 @@ class HeadClassifier(torch.nn.Module):
     def __init__(self, dropout_rate=0.2):
         super().__init__()
         self.model = self.define_model(dropout_rate=0.2)
-        self.reorder_load_state_dict(pathlib.Path('/assets/head_state_dict'))
+        self.reorder_load_state_dict(pathlib.Path('assets/head_state_dict'))
 
     @staticmethod
     def define_model(dropout_rate):

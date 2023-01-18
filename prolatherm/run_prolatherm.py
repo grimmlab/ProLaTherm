@@ -8,6 +8,7 @@ import pandas as pd
 
 
 if __name__ == '__main__':
+    """
     dataset = base_dataset.Dataset(
         data_dir=pathlib.Path("/bit_storage/Projects/ProteinThermPred/final_datasets/new_data/"),
         dataset_name='ProtThermPred_exp2.csv', datasplit='cv-test', n_outerfolds=1, n_innerfolds=5,
@@ -27,3 +28,8 @@ if __name__ == '__main__':
         y_pred=preds.cpu().detach().numpy().reshape(-1, 1), y_true=y_test,
         y_score=scores.cpu().detach().numpy().reshape(-1, 1), task='classification')
     )
+    """
+
+    # fasta file laden, das als param übergeben werden kann
+    # daten batchen und predictions machen
+    # csv abspeichern
