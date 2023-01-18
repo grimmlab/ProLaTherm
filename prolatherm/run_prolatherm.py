@@ -20,7 +20,7 @@ if __name__ == '__main__':
     X_test = torch.tensor(dataset.X_full[test_indices])
     y_test = dataset.y_full[test_indices]
     y_train = dataset.y_full[train_indices]
-    seqs_test = list(raw_data.iloc[test_indices, :]['seq_peptide'])
+    seqs_test = list(raw_data.iloc[test_indices, :]['seq_peptide'])[0:10]
     seqs_train = list(raw_data.iloc[train_indices, :]['seq_peptide'])
     preds, scores = pred_model.predict(seqs_test)
     print(eval_metrics.get_evaluation_report(
