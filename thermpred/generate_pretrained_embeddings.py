@@ -11,10 +11,10 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     # Input Params #
     parser.add_argument("-dd", "--data_dir", type=str,
-                        default='/bit_storage/Projects/ProteinThermPred/final_datasets/new_data/', #'/myhome/data/', #'/bit_storage/Projects/ProteinThermPred/final_datasets/',
+                        default='/myhome/data',
                         help="Provide the full path of your data directory (that contains the geno- and phenotype "
                              "files).")
-    parser.add_argument("-sd", "--save_dir", type=str, default='/myhome/work/',
+    parser.add_argument("-sd", "--save_dir", type=str, default='/myhome/data/',
                         help="Provide the full path of the directory in which you want to save your results. "
                              "Default is same as data_dir")
     parser.add_argument("-ds", "--dataset_name", type=str, default='ProtThermPred_fulldataset_evidence_only_clean.csv',

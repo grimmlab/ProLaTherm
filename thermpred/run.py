@@ -17,22 +17,22 @@ if __name__ == '__main__':
                         default='/myhome/data/',
                         help="Provide the full path of your data directory (that contains the geno- and phenotype "
                              "files).")
-    parser.add_argument("-sd", "--save_dir", type=str, default='/myhome/work/',
+    parser.add_argument("-sd", "--save_dir", type=str, default='/myhome/',
                         help="Provide the full path of the directory in which you want to save your results. "
                              "Default is same as data_dir")
-    parser.add_argument("-ds", "--dataset_name", type=str, default='ProtThermPred_fulldataset_evidence_only_clean.csv', #'ProtThermPred_exp2.csv', #'ProtThermPred_fulldataset_evidence_only_clean.csv', #'ProtThermPred_fulldataset_evidence_only.csv', #'dummy_data.csv',
+    parser.add_argument("-ds", "--dataset_name", type=str, default='ProtThermPred_fulldataset_evidence_only_clean.csv',
                         help="specify the name of the dataset to be used. Has to be a .csv file in our unified format"
                              "If working for the first time, you can also specify the options --fasta_thermo and "
                              "--fasta_nonthermo instead to generate the unified .csv format using fasta files."
                              "Needs to be located in the specified data_dir."
                         )
-    parser.add_argument("-fth", "--fasta_file_thermo", type=str, default=None, #'ProtThermoPred_with_homology_clean_thermo-cdhit.fasta', #'ProtThermoPred_shared_organisms_clean_thermo-cdhit.fasta', #'ProtThermoPred_evidence_only_clean_thermo-cdhit.fasta', #'ProtThermoPred_with_homology_thermo-cdhit.fasta', #'Zhang_evidence_only_thermo.fasta',
+    parser.add_argument("-fth", "--fasta_file_thermo", type=str, default=None,
                         help="specify the name of the fasta file containing thermophilic protein sequences"
                              "Needs to be located in the specified data_dir.")
-    parser.add_argument("-fnth", "--fasta_file_nonthermo", type=str, default=None, #'ProtThermoPred_with_homology_clean_non_thermo-cdhit.fasta', #'ProtThermoPred_shared_organisms_clean_non_thermo-cdhit.fasta', #'ProtThermoPred_evidence_only_clean_non_thermo-cdhit.fasta', #'ProtThermoPred_with_homology_non_thermo-cdhit.fasta', #'Zhang_evidence_only_non_thermo.fasta',
+    parser.add_argument("-fnth", "--fasta_file_nonthermo", type=str, default=None,
                         help="specify the name of the fasta file containing non-thermophilic protein sequences"
                              "Needs to be located in the specified data_dir.")
-    parser.add_argument("-nnd", "--name_new_dataset", type=str, default=None, #'ProtThermPred_fulldataset_with_homology_clean.csv', #'ProtThermPred_shared_organisms.csv', #'ProtThermPred_fulldataset_with_homology.csv', #'unified',
+    parser.add_argument("-nnd", "--name_new_dataset", type=str, default=None,
                         help="specify the name of the new dataset (.csv file) derived from the two provided fasta files"
                              "Will be saved in the specified data_dir.")
 
