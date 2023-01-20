@@ -73,7 +73,7 @@ if __name__ == '__main__':
         preds.extend(pred.flatten().tolist())
         scores.extend(score.flatten().tolist())
         start = end
-    print(get_evaluation_report(y_pred=np.array(preds), y_score=np.array(scores), y_true=np.array(y_test)))
+    print(get_evaluation_report(y_pred=np.array(preds), y_score=np.array(scores), y_true=np.array(y_test), task="classification"))
 
     # fasta file laden, das als param übergeben werden kann
     # daten batchen und predictions machen
