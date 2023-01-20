@@ -39,12 +39,12 @@ So in case you are interested in further details, easyPheno's comprehensive docu
 
 
 ### Requirements for the optimization framework
-Docker needs to be installed and running on your machine, see the Installation Guidelines at the Docker website: https://docs.docker.com/get-docker/
+Docker needs to be installed and running on your machine, see the [Installation Guidelines at the Docker website](https://docs.docker.com/get-docker/)
 On Ubuntu, you can use ``docker run hello-world`` or ``docker --version`` to check if Docker works
 (Caution: add sudo if you are not in the docker group).
 
-If you want to use GPU support, you need to install nvidia-docker-2 (https://github.com/NVIDIA/nvidia-docker, see this Installation Guide https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#setting-up-nvidia-container-toolkit).
-and a version of CUDA >= 11.2 (see this CUDA Installation Guide https://docs.nvidia.com/cuda/index.html#installation-guides). To check your CUDA version, just run ``nvidia-smi`` in a terminal.
+If you want to use GPU support, you need to install [nvidia-docker-2](https://github.com/NVIDIA/nvidia-docker), see this [Installation Guide](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#setting-up-nvidia-container-toolkit).
+and a version of CUDA >= 11.2 (see this [CUDA Installation Guide](https://docs.nvidia.com/cuda/index.html#installation-guides). To check your CUDA version, just run `nvidia-smi` in a terminal.
 
 CAUTION: The models *transformer* and *bigbird* require a minimum GPU memory of 48GB. 
 
@@ -90,7 +90,7 @@ to start it in interactive mode again. If you did not create a container yet, go
 
         python3 -m thermpred.run --save_dir SAVE_DIRECTORY
 
-    That's it! Very easy! You can now find the results in the save directory you specified. By default, if you do not specify a `save_dir` a results folder will be created at the top directory of your repository.
+    That's it! You can now find the results in the save directory you specified. By default, if you do not specify a `save_dir` a results folder will be created at the top directory of your repository.
 
 3. To get an overview of the different options you can set for running thermpred, just do:
 
@@ -126,25 +126,25 @@ You only have to invoke the data preprocessing once. For the next run, you can u
 
 #### Useful Docker commands
 
-The subsequent Docker commands might be useful when using easyPheno.
-See https://docs.docker.com/engine/reference/commandline/docker/ for a full guide on the Docker commands.
+The subsequent Docker commands might be useful when using thermpred.
+See [here](https://docs.docker.com/engine/reference/commandline/docker/) for a full guide on the Docker commands.
 
 - `docker images`: List all Docker images on your machine
 - `docker ps`: List all running Docker containers on your machine
 - `docker ps -a`: List all Docker containers (including stopped ones) on your machine
 - `docker start -i CONTAINERNAME`: Start a (stopped) Docker container interactively to enter its command line interface
-- 
 
 ## Contributors
 This pipeline is developed and maintained by members of the [Bioinformatics lab](https://bit.cs.tum.de) lead by [Prof. Dr. Dominik Grimm](https://bit.cs.tum.de/team/dominik-grimm/):
 - [Florian Haselbeck, M.Sc.](https://bit.cs.tum.de/team/florian-haselbeck/)
 - [Maura John, M.Sc.](https://bit.cs.tum.de/team/maura-john/)
+- [Jonathan Pirnay, M.Sc.](https://bit.cs.tum.de/team/jonathan-pirnay/)
 
 ## Citation
 When using parts of this repository, please cite our publication:
 
 **Superior Protein Thermophilicity Prediction With Protein Language Model Embeddings**  
-F Haselbeck, M John, Y Zhang, J Pirnay, JP Fuenzalida-Werner, RD Costa, and DG Grimm
+F Haselbeck, M John, Y Zhang, J Pirnay, JP Fuenzalida-Werner, RD Costa, and DG Grimm  
 *currently under review*
 
 Keywords: Protein Thermophilicity Prediction, Protein Language Model, Machine Learning
