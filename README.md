@@ -47,17 +47,18 @@ and a version of CUDA >= 11.2 (see this [CUDA Installation Guide](https://docs.n
     - You can restrict the number of cpus using the option ``cpuset-cpus CPU_INDEX_START-CPU_INDEX_STOP``.
     - Specify a gpu device using ``--gpus device=DEVICE_NUMBER`` if you want to use GPU support.
 
-    Let's have a look at an example. We assume hat you created a Docker image called ``thermpred_image``, your repository and data is placed in (subfolders of) ``/myhome/``, you want to save your results to ``/myhome/`` (so ``/myhome/`` is the only directory you need to mount in your container), you only want to use CPUs 0 to 9 and GPU 0 and you want to call your container ``thermpred_cont``. Then you have to run the following command:
+    Let's have a look at an example. We assume hat you created a Docker image called ``prolatherm_image``, your repository and data is placed in (subfolders of) ``/myhome/``, you want to save your results to ``/myhome/`` (so ``/myhome/`` is the only directory you need to mount in your container), you only want to use CPUs 0 to 9 and GPU 0 and you want to call your container ``prolatherm_cont``. Then you have to run the following command:
 
-        docker run -it -v /myhome/:/myhome_in_my_container/ --cpuset-cpus 0-9 --gpus device=0 --name thermpred_cont thermpred_image
+        docker run -it -v /myhome/:/myhome_in_my_container/ --cpuset-cpus 0-9 --gpus device=0 --name prolatherm_cont prolatherm_image
 
 6. Navigate to the directory where the repository is placed within your container and to the `prolatherm` subfolder
 
         cd /REPO_DIRECTORY/IN/CONTAINER/ProLaTherm/prolatherm
 
-7. Run prolatherm with giving the full path to the .fasta-file (default: `prolatherm/assets/dummy_fasta.csv`) and directory where you want to save your results file (default: repository folder)
+7. Run ProLaTherm with giving the full path to the .fasta-file (default: `prolatherm/assets/dummy_fasta.csv`) and directory where you want to save your results file (default: repository folder)
 
         python3 run_prolatherm.py -df /FULL/PATH/TO/FASTA/FILE -sd /FULL/PATH/TO/RESULTS/SAVE/DIR
+In case you have problems in getting inference running on your GPU, we provide an option `--no_gpu`, which you can set to `True` when calling `python3 run_prolatherm.py`
 
 That's it! The .fasta-file will be processed in batches of 10 samples, you will see the current status on the command line and in the end a .csv-file containing the results will be created.
 
@@ -84,9 +85,10 @@ For our tutorial below, we assume that you know how to work with a virtual envir
 
         cd ..
 
-6. Run prolatherm with giving the full path to the .fasta-file (default: `prolatherm/assets/dummy_fasta.csv`) and directory where you want to save your results file (default: repository folder)
+6. Run ProLaTherm with giving the full path to the .fasta-file (default: `prolatherm/assets/dummy_fasta.csv`) and directory where you want to save your results file (default: repository folder)
 
         python3 run_prolatherm.py -df /FULL/PATH/TO/FASTA/FILE -sd /FULL/PATH/TO/RESULTS/SAVE/DIR
+In case you have problems in getting inference running on your GPU, we provide an option `--no_gpu`, which you can set to `True` when calling `python3 run_prolatherm.py`
 
 That's it! The .fasta-file will be processed in batches of 10 samples, you will see the current status on the command line and in the end a .csv-file containing the results will be created.
 
