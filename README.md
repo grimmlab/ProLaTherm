@@ -76,16 +76,6 @@ CAUTION: The models *transformer* and *bigbird* require a minimum GPU memory of 
 
 Your setup is finished!
 
-#### Useful Docker commands
-
-The subsequent Docker commands might be useful when using easyPheno.
-See https://docs.docker.com/engine/reference/commandline/docker/ for a full guide on the Docker commands.
-
-- `docker images`: List all Docker images on your machine
-- `docker ps`: List all running Docker containers on your machine
-- `docker ps -a`: List all Docker containers (including stopped ones) on your machine
-- `docker start -i CONTAINERNAME`: Start a (stopped) Docker container interactively to enter its command line interface
-
 ### Run the optimization framework with prepared data
 You are at the **root directory within your Docker container**, i.e. after step 5 of the above-described setup.
 
@@ -133,6 +123,17 @@ to start it in interactive mode again. If you did not create a container yet, go
         python3 -m thermpred.run -dd /DIRECTORY/CONTAINING/YOUR/FASTAFILES -sd /SAVEDIRECTORY/FOR/CREATED/DATASET -fth FULL_NAME_OF_THERMOPHILIC_FASTA_FILE -fnth FULL_NAME_OF_NON_THERMOPHILIC_FASTA_FILE -nnd NAME_OF_THE_NEW_DATASET
 
 You only have to invoke the data preprocessing once. For the next run, you can use the above-described workflow for prepared data, and need to specify the name of your new dataset as the dataset to use.
+
+#### Useful Docker commands
+
+The subsequent Docker commands might be useful when using easyPheno.
+See https://docs.docker.com/engine/reference/commandline/docker/ for a full guide on the Docker commands.
+
+- `docker images`: List all Docker images on your machine
+- `docker ps`: List all running Docker containers on your machine
+- `docker ps -a`: List all Docker containers (including stopped ones) on your machine
+- `docker start -i CONTAINERNAME`: Start a (stopped) Docker container interactively to enter its command line interface
+- 
 
 ## Contributors
 This pipeline is developed and maintained by members of the [Bioinformatics lab](https://bit.cs.tum.de) lead by [Prof. Dr. Dominik Grimm](https://bit.cs.tum.de/team/dominik-grimm/):
