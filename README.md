@@ -8,11 +8,87 @@ In this repository, we publish three parts related to protein thermophilicity pr
 - Code to run our protein thermophilicity prediction optimization framework including several feature- and sequence-based prediction models
 
 ## Predict using ProLaTherm
-Genereller Warnhinweis ressourcen
+If you want to get thermophilicity predictions for your protein sequences using ProLaTherm, you first have to prepare a .fasta file containing sample ids and amino acid sequences.
+We expect the standard fasta format with the sample id, and the amino acid sequence following in the next line, see `prolatherm\assets\dummy_data.fasta` for an example.
 
-Docker workflow erklären
+Then you have two possibilities to run ProLaTherm:
+- Create a Docker container using the Dockerfile we provide and run ProLaTherm within this tested working  environment
+- Run ProLaTherm directly on your machine (e.g. within a virtual environment to prevent Python package version changes) after installing all required packages using our requirements.txt
 
-pip install workflow erklären - caution: only tested on ubuntu, use venv 
+Both possibilities are outlined below. In either case, make sure to have a minimum of 20GB memory. As you only run inference, a GPU is not necessary, but if you want to use one it should have at least 16GB memory.
+Using the provided .fasta-file, the pipeline will run on the command line and create a .csv-file containing the results.
+
+### Docker workflow
+Docker needs to be installed and running on your machine, see the [Installation Guidelines at the Docker website](https://docs.docker.com/get-docker/)
+On Ubuntu, you can use ``docker run hello-world`` or ``docker --version`` to check if Docker works
+(Caution: add sudo if you are not in the docker group).
+
+If you want to use GPU support, you need to install [nvidia-docker-2](https://github.com/NVIDIA/nvidia-docker), see this [Installation Guide](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#setting-up-nvidia-container-toolkit).
+and a version of CUDA >= 11.2 (see this [CUDA Installation Guide](https://docs.nvidia.com/cuda/index.html#installation-guides). To check your CUDA version, just run `nvidia-smi` in a terminal.
+
+1. Open a Terminal and navigate to the directory where you want to set up the project
+2. Clone this repository
+
+        git clone https://github.com/grimmlab/ProLaTherm.git
+
+3. Navigate to `prolatherm/Docker` after cloning the repository
+
+        cd ProLaTherm/prolatherm/Docker
+
+4. Build a Docker image using the provided Dockerfile tagged with the IMAGENAME of your choice
+
+        docker build -t IMAGENAME .
+
+5. Run an interactive Docker container based on the created image with a CONTAINERNAME of your choice
+
+        docker run -it -v /PATH/TO/REPO/FOLDER:/REPO_DIRECTORY/IN/CONTAINER -v /PATH/TO/DATA/DIRECTORY:/DATA_DIRECTORY/IN/CONTAINER -v /PATH/TO/RESULTS/SAVE/DIRECTORY:/SAVE_DIRECTORY/IN/CONTAINER --name CONTAINERNAME IMAGENAME
+
+    - Mount the directory where the repository is placed on your machine, the directory where your phenotype and genotype data is stored and the directory where you want to save your results using the option ``-v``.
+    - You can restrict the number of cpus using the option ``cpuset-cpus CPU_INDEX_START-CPU_INDEX_STOP``.
+    - Specify a gpu device using ``--gpus device=DEVICE_NUMBER`` if you want to use GPU support.
+
+    Let's have a look at an example. We assume hat you created a Docker image called ``thermpred_image``, your repository and data is placed in (subfolders of) ``/myhome/``, you want to save your results to ``/myhome/`` (so ``/myhome/`` is the only directory you need to mount in your container), you only want to use CPUs 0 to 9 and GPU 0 and you want to call your container ``thermpred_cont``. Then you have to run the following command:
+
+        docker run -it -v /myhome/:/myhome_in_my_container/ --cpuset-cpus 0-9 --gpus device=0 --name thermpred_cont thermpred_image
+
+6. Navigate to the directory where the repository is placed within your container and to the `prolatherm` subfolder
+
+        cd /REPO_DIRECTORY/IN/CONTAINER/ProLaTherm/prolatherm
+
+7. Run prolatherm with giving the full path to the .fasta-file (default: `prolatherm/assets/dummy_fasta.csv`) and directory where you want to save your results file (default: repository folder)
+
+        python3 run_prolatherm.py -df /FULL/PATH/TO/FASTA/FILE -sd /FULL/PATH/TO/RESULTS/SAVE/DIR
+
+That's it! The .fasta-file will be processed in batches of 10 samples, you will see the current status on the command line and in the end a .csv-file containing the results will be created.
+
+### Run ProLaTherm directly on your machine
+Instead of using Docker, you can run ProLatherm directly on your machine. We recommend to set up a Python virtual environment for that purpose, see here: https://docs.python.org/3/library/venv.html
+ProLaTherm was developed and tested in Python 3.8, so please use this Python version
+
+For our tutorial below, we assume that you know how to work with a virtual environment and are working within such an environment (or you decided against it).
+
+1. Open a Terminal and navigate to the directory where you want to set up the project
+2. Clone this repository
+
+        git clone https://github.com/grimmlab/ProLaTherm.git
+
+3. Navigate to `prolatherm/Docker` after cloning the repository
+
+        cd ProLaTherm/prolatherm/Docker
+
+4. Install all required Python packages using our `requirements.txt`
+
+        pip3 install -r requirements.txt
+
+5. Navigate to the `prolatherm` subfolder of your repository
+
+        cd ..
+
+6. Run prolatherm with giving the full path to the .fasta-file (default: `prolatherm/assets/dummy_fasta.csv`) and directory where you want to save your results file (default: repository folder)
+
+        python3 run_prolatherm.py -df /FULL/PATH/TO/FASTA/FILE -sd /FULL/PATH/TO/RESULTS/SAVE/DIR
+
+That's it! The .fasta-file will be processed in batches of 10 samples, you will see the current status on the command line and in the end a .csv-file containing the results will be created.
 
 
 ## Data
