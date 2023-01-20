@@ -16,10 +16,10 @@ if __name__ == '__main__':
     base_path = pathlib.Path().absolute()
     # Input Params #
     parser.add_argument("-dd", "--data_dir", type=str,
-                        default=base_path.parent.joinpath('data/datasets_w_datasplits/'),
+                        default=base_path.joinpath('data/datasets_w_datasplits/'),
                         help="Provide the full path of your data directory (that contains the geno- and phenotype "
                              "files).")
-    parser.add_argument("-sd", "--save_dir", type=str, default=base_path.parent,
+    parser.add_argument("-sd", "--save_dir", type=str, default=base_path,
                         help="Provide the full path of the directory in which you want to save your results. "
                              "Default is same as data_dir")
     parser.add_argument("-ds", "--dataset_name", type=str, default='ProtThermPred_fulldataset.csv',
