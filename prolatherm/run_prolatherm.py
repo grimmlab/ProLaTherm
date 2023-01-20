@@ -20,8 +20,7 @@ if __name__ == '__main__':
                         help="Provide the full path of the directory in which you want to save your results. "
                              "Default is in the root directory of your repository.")
     parser.add_argument("-ng", "--no_gpu", type=lambda x: (str(x).lower() in ['true', '1', 'yes']),
-                        default=True,
-                        help="Do not use GPU if set True")
+                        default=False, help="Do not use GPU if set True. Default: False")
     args = vars(parser.parse_args())
     data_dir_fasta = pathlib.Path(args["data_dir_fasta"])
     save_dir = pathlib.Path(args["save_dir"])
