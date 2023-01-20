@@ -77,6 +77,8 @@ if __name__ == '__main__':
                              "it will be considered as a hyperparameter for optimization")
 
     args = vars(parser.parse_args())
+    if args["fasta_file_thermo"] is not None:
+        args["dataset_name"] = None
 
     try:
         optim_pipeline.run(**args)

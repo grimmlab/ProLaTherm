@@ -34,6 +34,10 @@ Within the folder `data`, one can find three subfolders:
 To run our optimization framework, we highly recommend our workflow using Docker due to its easy-to-use interface and ready-to-use working environment
 within a Docker container.
 
+This optimization framework is based on easyPheno, our phenotype prediction optimization framework. 
+So in case you are interested in further details, easyPheno's comprehensive documentation including installation guides, tutorials and much more, might be helpful: https://easypheno.readthedocs.io/
+
+
 ### Requirements for the optimization framework
 Docker needs to be installed and running on your machine, see the Installation Guidelines at the Docker website: https://docs.docker.com/get-docker/
 On Ubuntu, you can use ``docker run hello-world`` or ``docker --version`` to check if Docker works
@@ -106,19 +110,11 @@ to start it in interactive mode again. If you did not create a container yet, go
 Feel free to test thermpred, e.g. with other prediction models.
 
 CAUTION: If you want to run the optimization for `prolatherm`, you first have to generate .h5-files containing the embeddings.
+To generate such a file, you need to run `python3 -m thermpred.generate_pretrained_embeddings` from the directory where your repository is placed in the Docker container.
+To check the different options, e.g. to change the dataset for which we generate the embeddings by default, please run `python3 -m thermpred.generate_pretrained_embeddings --help`.
+CAUTION: this will need up to 20GB of memory on your machine.
 
 
-
-If you want to start using your own data, please carefully read our :ref:`Data Guide` to ensure that your data fulfills all requirements.
-
-
-
-Docker workflow mit unseren datasets
-
-how to run own optimizations with new fasta files
-
-Our optimization framework is based on easyPheno, our phenotype prediction optimization framework. 
-So in case you are interested in further details, easyPheno's comprehensive documentation including installation guides, tutorials and much more, might be helpful: https://easypheno.readthedocs.io/
 
 
 ## Contributors
