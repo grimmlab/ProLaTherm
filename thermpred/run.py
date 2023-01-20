@@ -1,4 +1,5 @@
 import argparse
+import pathlib
 
 from thermpred.utils import helper_functions
 from . import optim_pipeline
@@ -12,15 +13,16 @@ if __name__ == '__main__':
     """
     # User Input #
     parser = argparse.ArgumentParser()
+    base_path = pathlib.Path().absolute()
     # Input Params #
     parser.add_argument("-dd", "--data_dir", type=str,
-                        default='/myhome/data/',
+                        default=base_path.parent.joinpath('data/datasets_w_datasplits/'),
                         help="Provide the full path of your data directory (that contains the geno- and phenotype "
                              "files).")
-    parser.add_argument("-sd", "--save_dir", type=str, default='/myhome/',
+    parser.add_argument("-sd", "--save_dir", type=str, default=base_path.parent,
                         help="Provide the full path of the directory in which you want to save your results. "
                              "Default is same as data_dir")
-    parser.add_argument("-ds", "--dataset_name", type=str, default='ProtThermPred_fulldataset_evidence_only_clean.csv',
+    parser.add_argument("-ds", "--dataset_name", type=str, default='ProtThermPred_fulldataset.csv',
                         help="specify the name of the dataset to be used. Has to be a .csv file in our unified format"
                              "If working for the first time, you can also specify the options --fasta_thermo and "
                              "--fasta_nonthermo instead to generate the unified .csv format using fasta files."
@@ -54,12 +56,12 @@ if __name__ == '__main__':
                              "Standard is 5, only relevant for 'nested_cv' and 'cv-test'")
 
     # Model and Optimization Params #
-    parser.add_argument("-mod", "--models", nargs='+', type=str, default=['xgboost'],
+    parser.add_argument("-mod", "--models", nargs='+', type=str, default=['svm'],
                         help="specify the models to optimize: 'all' or naming according to source file name. "
                              "Multiple models can be selected by just naming multiple model names, "
                              "e.g. --models mlp xgboost. "
                              "The following are available: " + str(helper_functions.get_list_of_implemented_models()))
-    parser.add_argument("-tr", "--n_trials", type=int, default=200,
+    parser.add_argument("-tr", "--n_trials", type=int, default=10,
                         help="number of trials for optuna")
     parser.add_argument("-sf", "--save_final_model", type=lambda x: (str(x).lower() in ['true', '1', 'yes']),
                         default=True,
