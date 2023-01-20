@@ -56,7 +56,7 @@ if __name__ == '__main__':
 
     start = 0
     step_size = 10
-    num_samples = unique_data.shape[1]
+    num_samples = unique_data.shape[0]
     preds = []
     scores = []
     for i in range(step_size, num_samples, step_size):
