@@ -19,6 +19,9 @@ if __name__ == '__main__':
     parser.add_argument("-sd", "--save_dir", type=str, default=base_path.parent,
                         help="Provide the full path of the directory in which you want to save your results. "
                              "Default is in the root directory of your repository.")
+    parser.add_argument("-ng", "--no_gpu", type=lambda x: (str(x).lower() in ['true', '1', 'yes']),
+                        default=True,
+                        help="Do not use GPU if set True")
     args = vars(parser.parse_args())
     data_dir_fasta = pathlib.Path(args["data_dir_fasta"])
     save_dir = pathlib.Path(args["save_dir"])
@@ -39,7 +42,7 @@ if __name__ == '__main__':
 
     # Load prediction model
     print("Load ProLaTherm model")
-    pred_model = prolatherm.ProLaTherm()
+    pred_model = prolatherm.ProLaTherm(no_gpu=args["no_gpu"])
 
     # Run prediction pipeline in batches of size 10
     start = 0

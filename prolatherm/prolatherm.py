@@ -15,9 +15,9 @@ class ProLaTherm(torch.nn.Module):
         - Average pooling along sequence length
         - Head classifier
     """
-    def __init__(self, dropout_rate: float = 0.2):
+    def __init__(self, dropout_rate: float = 0.2, no_gpu: bool = False):
         super().__init__()
-        self.device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+        self.device = torch.device('cpu') if no_gpu else torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
         pretrained_model = "Rostlab/prot_t5_xl_uniref50"
         transformers.logging.set_verbosity_error()
         self.tokenizer = transformers.T5Tokenizer.from_pretrained(pretrained_model, do_lower_case=False)
