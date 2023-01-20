@@ -177,10 +177,9 @@ to start it in interactive mode again. If you did not create a container yet, go
 
 Feel free to test thermpred, e.g. with other prediction models.
 
-CAUTION: If you want to run the optimization for `prolatherm`, you first have to generate .h5-files containing the embeddings.
+CAUTION: If you want to run the optimization for `prolatherm`, you first have to generate .h5-files containing the embeddings. This will need up to 20GB of memory on your machine!
 To generate such a file, you need to run `python3 -m thermpred.generate_pretrained_embeddings` from the directory where your repository is placed in the Docker container.
 To check the different options, e.g. to change the dataset for which we generate the embeddings by default, please run `python3 -m thermpred.generate_pretrained_embeddings --help`.
-CAUTION: this will need up to 20GB of memory on your machine.
 
 
 ### Run the optimization framework using your own .fasta-files
