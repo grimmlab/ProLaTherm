@@ -3,6 +3,7 @@ import pathlib
 import argparse
 import utils
 from tqdm import tqdm
+import warnings
 
 import prolatherm
 
@@ -39,7 +40,9 @@ if __name__ == '__main__':
 
     # Load prediction model
     print("Load ProLaTherm model")
-    pred_model = prolatherm.ProLaTherm()
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")  # Ignore warning that not whole model is loaded as we only use encoder
+        pred_model = prolatherm.ProLaTherm()
 
     # Run prediction pipeline in batches of size 10
     start = 0
@@ -66,7 +69,7 @@ if __name__ == '__main__':
     results["score"] = scores
     results["prediction"] = \
         results["prediction_binary"].apply(lambda x: "thermophilic" if x == 1 else "non-thermophilic")
-    results_file_path = save_dir.joinpath("ProLaTherm_Predictions_" + str(data_dir_fasta[-1]).replace(".fasta", ".csv"))
+    results_file_path = save_dir.joinpath("ProLaTherm_Predictions_" + str(data_dir_fasta.stem) + ".csv")
     results.to_csv(results_file_path, index=False)
     print("Saved results at: " + str(results_file_path))
     print("Here are the final predictions:")
