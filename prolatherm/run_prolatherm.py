@@ -48,12 +48,12 @@ if __name__ == '__main__':
     preds = []
     scores = []
     print("Start prediction pipeline")
-    for i in range(step_size, num_samples, step_size):
-        end = i if i + step_size < num_samples else num_samples
+    for i in range(0, num_samples, step_size):
+        end = i + step_size if i + step_size < num_samples else num_samples
         seqs = sequences[start:end]
         if start+1 == end:
             seqs = [seqs]
-        print("Running prediction for sequences " + str(start) + ' to ' + str(end) + " of in total " + str(num_samples))
+        print("Running prediction for sequences " + str(start+1) + ' to ' + str(end) + " of in total " + str(num_samples))
         pred, score = pred_model.predict(seqs)
         preds.extend(pred.flatten().tolist())
         scores.extend(score.flatten().tolist())
