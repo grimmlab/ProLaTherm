@@ -56,7 +56,7 @@ if __name__ == '__main__':
                              "Standard is 5, only relevant for 'nested_cv' and 'cv-test'")
 
     # Model and Optimization Params #
-    parser.add_argument("-mod", "--models", nargs='+', type=str, default=['svm'],
+    parser.add_argument("-mod", "--models", nargs='+', type=str, default=['xgboost'],
                         help="specify the models to optimize: 'all' or naming according to source file name. "
                              "Multiple models can be selected by just naming multiple model names, "
                              "e.g. --models mlp xgboost. "
