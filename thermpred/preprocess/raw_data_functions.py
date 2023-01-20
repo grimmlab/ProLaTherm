@@ -107,7 +107,7 @@ def create_dataset(data_dir: pathlib.Path, fasta_file_thermo: str, fasta_file_no
             [thermo_data, non_thermo_data],
             [ids_thermo, ids_non_thermo],
             [fasta_file_thermo, fasta_file_non_thermo],
-            ['thermo', 'meso'],
+            ['thermo', 'nonthermo'],
             [1, 0],
             [seq_thermo, seq_non_thermo]):
         dataframe = info[0]
