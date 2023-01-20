@@ -13,7 +13,6 @@ import pathlib
 import math
 
 import torch.cuda
-import tensorflow as tf
 
 from ..preprocess import base_dataset
 from ..utils import helper_functions
@@ -251,9 +250,9 @@ class OptunaOptim:
                                                                         task=self.task,
                                                                         prefix=innerfold_name + '_').items():
                     validation_results.at[0, metric] = value if 'roc_list' not in metric else str(value)
-            except (RuntimeError, TypeError, tf.errors.ResourceExhaustedError, ValueError) as exc:
+            except (RuntimeError, TypeError, ValueError) as exc:
                 print(exc)
-                if 'out of memory' in str(exc) or isinstance(exc, tf.errors.ResourceExhaustedError):
+                if 'out of memory' in str(exc) or isinstance(exc):
                     # Recover from CUDA out of memory error
                     print('CUDA OOM at batch_size ' + str(model.batch_size))
                     del model
@@ -491,13 +490,6 @@ class OptunaOptim:
         # Iterate over outerfolds
         # (according to structure described in base_dataset.Dataset, only for nested-cv multiple outerfolds exist)
         helper_functions.set_all_seeds()
-        devices = tf.config.list_physical_devices('GPU')
-        if devices:
-            try:
-                for gpu in devices:
-                    tf.config.experimental.set_memory_growth(gpu, True)
-            except RuntimeError as e:
-                print(e)
         overall_results = {}
         for outerfold_name, outerfold_info in self.dataset.datasplit_indices.items():
             if self.dataset.datasplit == 'nested-cv':

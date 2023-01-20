@@ -5,7 +5,6 @@ import torch
 import random
 import numpy as np
 import pandas as pd
-import tensorflow as tf
 import pathlib
 import h5py
 
@@ -84,7 +83,6 @@ def set_all_seeds(seed: int = 42):
     np.random.seed(seed)
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
-    tf.random.set_seed(seed)
 
 
 def get_subpath_for_datasplit(datasplit: str, datasplit_params: list) -> str:
