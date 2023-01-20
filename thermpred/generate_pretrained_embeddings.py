@@ -9,15 +9,16 @@ if __name__ == '__main__':
 
     # User Input #
     parser = argparse.ArgumentParser()
+    base_path = pathlib.Path().absolute()
     # Input Params #
     parser.add_argument("-dd", "--data_dir", type=str,
-                        default='/myhome/data',
+                        default=base_path.joinpath('data/datasets_w_datasplits/'),
                         help="Provide the full path of your data directory (that contains the geno- and phenotype "
                              "files).")
-    parser.add_argument("-sd", "--save_dir", type=str, default='/myhome/data/',
+    parser.add_argument("-sd", "--save_dir", type=str, default=base_path.joinpath('data/datasets_w_datasplits/'),
                         help="Provide the full path of the directory in which you want to save your results. "
                              "Default is same as data_dir")
-    parser.add_argument("-ds", "--dataset_name", type=str, default='ProtThermPred_fulldataset_evidence_only_clean.csv',
+    parser.add_argument("-ds", "--dataset_name", type=str, default='ProtThermPred_fulldataset.csv',
                         help="specify the name of the dataset to be used. Has to be a .csv file in our unified format"
                              "If working for the first time, you can also specify the options --fasta_thermo and "
                              "--fasta_nonthermo instead to generate the unified .csv format using fasta files."
