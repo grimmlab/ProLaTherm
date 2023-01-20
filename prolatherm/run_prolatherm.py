@@ -48,7 +48,7 @@ def get_evaluation_report(y_pred: np.array, y_true: np.array, y_score: np.array,
 
 if __name__ == '__main__':
     raw_data = pd.read_csv("/myhome/ProLaTherm/data/datasets_w_datasplits/ProtThermPred_speciesspecific.csv")
-    unique_data = raw_data.iloc[4797:5010]
+    unique_data = raw_data.iloc[4797:4820]
     prot_ids_test = unique_data["meta_protein_id"]
     seqs_test = unique_data['seq_peptide']
     y_test = unique_data['label_binary']
@@ -65,7 +65,11 @@ if __name__ == '__main__':
         print(end)
         # prot_ids = prot_ids_test[start:end]
         seq = seqs_test[start:end]
+        print("Running prediction")
+        print(seq)
         pred, score = pred_model.predict(seq)
+        print(pred)
+        print(score)
         preds.extend(pred.flatten().tolist())
         scores.extend(score.flatten().tolist())
         start = end
