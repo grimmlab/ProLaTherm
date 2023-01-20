@@ -1,7 +1,7 @@
 import pathlib
 import torch
 import re
-from transformers import T5Tokenizer, T5EncoderModel
+import transformers
 from collections import OrderedDict
 
 import utils
@@ -19,8 +19,9 @@ class ProLaTherm(torch.nn.Module):
         super().__init__()
         self.device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
         pretrained_model = "Rostlab/prot_t5_xl_uniref50"
-        self.tokenizer = T5Tokenizer.from_pretrained(pretrained_model, do_lower_case=False)
-        self.feat_ext = T5EncoderModel.from_pretrained(pretrained_model).to(device=self.device)
+        transformers.logging.set_verbosity_error()
+        self.tokenizer = transformers.T5Tokenizer.from_pretrained(pretrained_model, do_lower_case=False)
+        self.feat_ext = transformers.T5EncoderModel.from_pretrained(pretrained_model).to(device=self.device)
         self.dropout = torch.nn.Dropout(p=dropout_rate)
         self.average_pooling = AveragePoolProtEmbeds()
         self.head = HeadClassifier().to(device=self.device)

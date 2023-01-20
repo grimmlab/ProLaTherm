@@ -2,7 +2,6 @@ import pandas as pd
 import pathlib
 import argparse
 import utils
-from tqdm import tqdm
 import warnings
 
 import prolatherm
@@ -40,9 +39,7 @@ if __name__ == '__main__':
 
     # Load prediction model
     print("Load ProLaTherm model")
-    with warnings.catch_warnings():
-        warnings.simplefilter("ignore")  # Ignore warning that not whole model is loaded as we only use encoder
-        pred_model = prolatherm.ProLaTherm()
+    pred_model = prolatherm.ProLaTherm()
 
     # Run prediction pipeline in batches of size 10
     start = 0
@@ -50,12 +47,13 @@ if __name__ == '__main__':
     num_samples = len(sequences)
     preds = []
     scores = []
-    for i in tqdm(range(step_size, num_samples, step_size)):
+    print("Start prediction pipeline")
+    for i in range(step_size, num_samples, step_size):
         end = i if i + step_size < num_samples else num_samples
         seqs = sequences[start:end]
         if start+1 == end:
             seqs = [seqs]
-        print("Running prediction")
+        print("Running prediction for sequences " + str(start) + ' to ' + str(end) + " of in total " + str(num_samples))
         pred, score = pred_model.predict(seqs)
         preds.extend(pred.flatten().tolist())
         scores.extend(score.flatten().tolist())
