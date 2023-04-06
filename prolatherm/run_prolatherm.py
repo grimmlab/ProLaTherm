@@ -45,7 +45,7 @@ if __name__ == '__main__':
 
     # Run prediction pipeline in batches of size 10
     start = 0
-    step_size = 10
+    step_size = 1
     num_samples = len(sequences)
     preds = []
     scores = []
