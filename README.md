@@ -9,7 +9,7 @@ In this repository, we publish three parts related to protein thermophilicity pr
 
 ## Predict using ProLaTherm
 If you want to get thermophilicity predictions for your protein sequences using ProLaTherm, you first have to prepare a .fasta file containing sample ids and amino acid sequences.
-We expect the standard fasta format with the sample id, and the amino acid sequence following in the next line, see `prolatherm\assets\dummy_data.fasta` for an example.
+We expect the standard fasta format with the sample id, and the amino acid sequence following in the next line, see `prolatherm/assets/dummy_data.fasta` for an example.
 
 Then you have two possibilities to run ProLaTherm:
 - Create a Docker container using the Dockerfile we provide and run ProLaTherm within this tested working  environment
@@ -177,10 +177,9 @@ to start it in interactive mode again. If you did not create a container yet, go
 
 Feel free to test thermpred, e.g. with other prediction models.
 
-CAUTION: If you want to run the optimization for `prolatherm`, you first have to generate .h5-files containing the embeddings.
+CAUTION: If you want to run the optimization for `prolatherm`, you first have to generate .h5-files containing the embeddings. This will need up to 20GB of memory on your machine!
 To generate such a file, you need to run `python3 -m thermpred.generate_pretrained_embeddings` from the directory where your repository is placed in the Docker container.
 To check the different options, e.g. to change the dataset for which we generate the embeddings by default, please run `python3 -m thermpred.generate_pretrained_embeddings --help`.
-CAUTION: this will need up to 20GB of memory on your machine.
 
 
 ### Run the optimization framework using your own .fasta-files
