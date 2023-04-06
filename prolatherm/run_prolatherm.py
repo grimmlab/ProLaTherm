@@ -45,7 +45,7 @@ if __name__ == '__main__':
 
     # Run prediction pipeline in batches of size 10
     start = 0
-    step_size = 1
+    step_size = 10
     num_samples = len(sequences)
     preds = []
     scores = []
@@ -63,12 +63,13 @@ if __name__ == '__main__':
     print("Finished. Creating results file.")
 
     # Save results
-    results = pd.DataFrame(columns=["IDs", "prediction_binary", "prediction", "score"])
+    results = pd.DataFrame(columns=["IDs", "aa-seq", "prediction_binary", "prediction", "score"])
     results["IDs"] = protein_ids
     results["prediction_binary"] = preds
     results["score"] = scores
     results["prediction"] = \
         results["prediction_binary"].apply(lambda x: "thermophilic" if x == 1 else "non-thermophilic")
+    results["aa-seq"] = sequences
     results_file_path = save_dir.joinpath("ProLaTherm_Predictions_" + str(data_dir_fasta.stem) + ".csv")
     results.to_csv(results_file_path, index=False)
     print("Saved results at: " + str(results_file_path))
