@@ -1,11 +1,12 @@
 # ProLaTherm: *Pro*tein *La*nguage Model-based *Therm*ophilicity Predictor
 [![Python 3.8](https://img.shields.io/badge/Python-3.8-3776AB)](https://www.python.org/downloads/release/python-388/)
 
-In this repository, we publish three parts related to protein thermophilicity prediction:
+In this repository, we publish four parts related to protein thermophilicity prediction:
 
 - Code to get predictions using ProLaTherm, the first protein language model-based thermophilicity predictor
 - A new benchmark dataset for protein thermophilicity prediction consisting of three significantly updated datasets from literature and newly collected data
 - Code to run our protein thermophilicity prediction optimization framework including several feature- and sequence-based prediction models
+- Results of the hyperparameter optimization we conducted with respect to the publication given below
 
 ## Predict using ProLaTherm
 If you want to get thermophilicity predictions for your protein sequences using ProLaTherm, you first have to prepare a .fasta file containing sample ids and amino acid sequences.
@@ -210,6 +211,9 @@ See [here](https://docs.docker.com/engine/reference/commandline/docker/) for a f
 - `docker ps`: List all running Docker containers on your machine
 - `docker ps -a`: List all Docker containers (including stopped ones) on your machine
 - `docker start -i CONTAINERNAME`: Start a (stopped) Docker container interactively to enter its command line interface
+
+## Results hyperparameter optimization
+We further included a detailed overview of the hyperparameter optimzation for each prediction model, both for the nested cross-validation and setting with a test set containing species not present in training and validation data described in the publication given below. There is an .xlsx-file for each phenotype which has different sheets. One sheet gives an overview on the results. Further, there is one sheet for each prediction model with the results. Beyond that, there is a sheet with the runtime overview and tried hyperparameter combination for each outerfold and prediction model.
 
 ## Contributors
 This pipeline is developed and maintained by members of the [Bioinformatics lab](https://bit.cs.tum.de) lead by [Prof. Dr. Dominik Grimm](https://bit.cs.tum.de/team/dominik-grimm/):
