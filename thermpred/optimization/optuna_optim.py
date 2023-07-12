@@ -249,7 +249,7 @@ class OptunaOptim:
                 for metric, value in eval_metrics.get_evaluation_report(y_pred=y_pred, y_true=y_val, y_score=y_score,
                                                                         task=self.task,
                                                                         prefix=innerfold_name + '_').items():
-                    validation_results.at[0, metric] = value if 'roc_list' not in metric else str(value)
+                    validation_results.at[0, metric] = value if 'list' not in metric else str(value)
             except (RuntimeError, TypeError, ValueError) as exc:
                 print(exc)
                 if 'out of memory' in str(exc) or isinstance(exc):
@@ -418,7 +418,7 @@ class OptunaOptim:
         final_results.at[0:len(y_test) - 1, 'y_true_test'] = y_test.flatten()
         final_results.at[0:len(y_score_test) - 1, 'y_score_test'] = y_score_test.flatten()
         for metric, value in eval_scores.items():
-            final_results.at[0, metric] = value if 'roc_list' not in metric else str(value)
+            final_results.at[0, metric] = value if 'list' not in metric else str(value)
         if len(self.study.trials) == self.user_input_params["n_trials"]:
             results_filename = 'final_model_test_results.csv'
             feat_import_filename = 'final_model_feature_importances.csv'

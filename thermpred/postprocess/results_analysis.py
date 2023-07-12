@@ -27,7 +27,7 @@ def summarize_results_per_datasplit(results_directory_dataset_name: str):
 
     for pattern in list(datasplit_patterns):
         writer = pd.ExcelWriter(
-            results_directory_dataset_name.joinpath('Detailed_results_summary_' + pattern + '.xlsx'),
+            results_directory_dataset_name.joinpath('Detailed_results_summary_new' + pattern + '.xlsx'),
             engine='xlsxwriter'
         )
         overview_df = None
@@ -153,9 +153,12 @@ def result_string_to_dictionary(result_string: str) -> dict:
 
     :return: dictionary with info from .csv file
     """
-    result_string = \
-        result_string[:result_string.find('test_roc_list_fpr')] + result_string[result_string.find('test_roc_auc'):] \
-            if 'list' in result_string else result_string
+    if 'roc_list' in result_string:
+        result_string = \
+            result_string[:result_string.find('test_roc_list_fpr')] + result_string[result_string.find('test_roc_auc'):]
+    elif 'prc_list' in result_string:
+        result_string = \
+            result_string[:result_string.find('test_prc_list_prec')] + result_string[result_string.find('test_prc_auc'):]
     key_value_strings = result_string.split('\\')[0][2:-2].replace('\'', '').split(',')
     dict_result = {}
     for key_value_string in key_value_strings:
