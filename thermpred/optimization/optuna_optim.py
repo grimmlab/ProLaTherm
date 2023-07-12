@@ -412,9 +412,11 @@ class OptunaOptim:
         final_results.at[0:len(sample_ids_retrain) - 1, 'sample_ids_retrain'] = sample_ids_retrain.flatten()
         final_results.at[0:len(y_pred_retrain) - 1, 'y_pred_retrain'] = y_pred_retrain.flatten()
         final_results.at[0:len(y_retrain) - 1, 'y_true_retrain'] = y_retrain.flatten()
+        final_results.at[0:len(y_score_retrain) - 1, 'y_score_retrain'] = y_score_retrain.flatten()
         final_results.at[0:len(sample_ids_test) - 1, 'sample_ids_test'] = sample_ids_test.flatten()
         final_results.at[0:len(y_pred_test) - 1, 'y_pred_test'] = y_pred_test.flatten()
         final_results.at[0:len(y_test) - 1, 'y_true_test'] = y_test.flatten()
+        final_results.at[0:len(y_score_test) - 1, 'y_score_test'] = y_score_test.flatten()
         for metric, value in eval_scores.items():
             final_results.at[0, metric] = value if 'roc_list' not in metric else str(value)
         if len(self.study.trials) == self.user_input_params["n_trials"]:
