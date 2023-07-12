@@ -1,6 +1,7 @@
 import pandas as pd
 import pathlib
 import numpy as np
+import sklearn.metrics
 
 from ..utils import helper_functions, check_functions
 
@@ -56,6 +57,25 @@ def summarize_results_per_datasplit(results_directory_dataset_name: str):
                         runtime_dict = result_string_to_dictionary(
                             result_string=results[current_model + '___runtime_metrics'].iloc[-2]
                         )
+                        """
+                        # insert missing test metrics
+                        bacc = []
+                        spec = []
+                        for of_fold_path in list(path.glob('outer*')):
+                            final_model_test_results = \
+                                pd.read_csv(list(of_fold_path.joinpath(current_model).glob('*test_results*'))[0])
+                            y_true_test_res = final_model_test_results['y_true_test'].dropna().tolist()
+                            y_pred_test_res = final_model_test_results['y_pred_test'].dropna().tolist()
+                            tn, fp, fn, tp = sklearn.metrics.confusion_matrix(y_true_test_res, y_pred_test_res).ravel()
+                            bacc.append(
+                                sklearn.metrics.balanced_accuracy_score(y_true=y_true_test_res, y_pred=y_pred_test_res)
+                            )
+                            spec.append(tn / (tn + fp))
+                        eval_dict_std['test_bacc'] = np.std(bacc)
+                        eval_dict_std['test_specifity'] = np.std(spec)
+                        eval_dict['test_bacc'] = np.mean(bacc)
+                        eval_dict['test_specifity'] = np.mean(spec)
+                        """
                         val_results_files = list(path.glob('*/' + current_model + '/validation_results*.csv'))
                         val_dict = {str(key).replace('test_', 'val_') + '_mean': [] for key, val in eval_dict.items()}
                         val_dict_list = []
@@ -69,6 +89,19 @@ def summarize_results_per_datasplit(results_directory_dataset_name: str):
                                     if key in col:
                                         val_dict['val_' + key + '_mean'].append(float(val_results.at[0, col]))
                                         val_dict_onefold['val_' + key + '_mean'].append(float(val_results.at[0, col]))
+                            # insert missing val results
+                            """
+                            for fold in range(5):
+                                true = val_results['innerfold_' + str(fold) + '_val_true'].dropna().tolist()
+                                pred = val_results['innerfold_' + str(fold) + '_val_pred'].dropna().tolist()
+                                tn, fp, fn, tp = sklearn.metrics.confusion_matrix(true, pred).ravel()
+                                val_dict_onefold['val_' + 'bacc' + '_mean'].append(
+                                    float(sklearn.metrics.balanced_accuracy_score(y_true=true, y_pred=pred)))
+                                val_dict_onefold['val_' + 'specifity' + '_mean'].append(float(tn / (tn + fp)))
+                                val_dict['val_' + 'bacc' + '_mean'].append(
+                                    float(sklearn.metrics.balanced_accuracy_score(y_true=true, y_pred=pred)))
+                                val_dict['val_' + 'specifity' + '_mean'].append(float(tn / (tn + fp)))
+                            """
                             val_dict_list.append(val_dict_onefold)
                     else:
                         eval_dict = result_string_to_dictionary(
@@ -77,6 +110,17 @@ def summarize_results_per_datasplit(results_directory_dataset_name: str):
                         runtime_dict = result_string_to_dictionary(
                             result_string=results[current_model + '___runtime_metrics'][0]
                         )
+                        # insert missing test results
+                        """
+                        final_model_test_results = \
+                            pd.read_csv(list(path.joinpath(current_model).glob('*test_results*'))[0])
+                        y_true_test_res = final_model_test_results['y_true_test'].dropna().tolist()
+                        y_pred_test_res = final_model_test_results['y_pred_test'].dropna().tolist()
+                        tn, fp, fn, tp = sklearn.metrics.confusion_matrix(y_true_test_res, y_pred_test_res).ravel()
+                        eval_dict['test_bacc'] = \
+                            sklearn.metrics.balanced_accuracy_score(y_true=y_true_test_res, y_pred=y_pred_test_res)
+                        eval_dict['test_specifity'] = tn / (tn + fp)
+                        """
                         val_results_file = list(path.joinpath(current_model).glob('validation_results*.csv'))[0]
                         val_results = pd.read_csv(val_results_file)
                         val_dict = {str(key).replace('test_', 'val_') + '_mean': [] for key, val in eval_dict.items()}
@@ -86,6 +130,15 @@ def summarize_results_per_datasplit(results_directory_dataset_name: str):
                             for key in keys:
                                 if key in col:
                                     val_dict['val_' + key + '_mean'].append(float(val_results.at[0, col]))
+                        """
+                        for fold in range(5):
+                            true = val_results['innerfold_' + str(fold) + '_val_true'].dropna().tolist()
+                            pred = val_results['innerfold_' + str(fold) + '_val_pred'].dropna().tolist()
+                            tn, fp, fn, tp = sklearn.metrics.confusion_matrix(true, pred).ravel()
+                            val_dict['val_' + 'bacc' + '_mean'].append(
+                                float(sklearn.metrics.balanced_accuracy_score(y_true=true, y_pred=pred)))
+                            val_dict['val_' + 'specifity' + '_mean'].append(float(tn / (tn + fp)))
+                        """
                     excel_save_str = current_model if current_model != 'transformerreducedposembed' \
                         else 'transredposembed'
                     results.to_excel(writer, sheet_name=excel_save_str + '_results', index=False)
