@@ -226,6 +226,6 @@ When using parts of this repository, please cite our publication:
 
 **Superior Protein Thermophilicity Prediction With Protein Language Model Embeddings**  
 F Haselbeck, M John, Y Zhang, J Pirnay, JP Fuenzalida-Werner, RD Costa, and DG Grimm  
-*currently under review*
+*accepted at NAR Genomics and Bioinformatics, 2023*
 
 Keywords: Protein Thermophilicity Prediction, Protein Language Model, Machine Learning
