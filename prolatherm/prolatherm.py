@@ -53,16 +53,17 @@ class ProLaTherm(torch.nn.Module):
         with torch.no_grad():
             out = self.feat_ext(input_ids=input_ids, attention_mask=attention_mask)
         embedding = out.last_hidden_state
-        seq_lens = [(attention_mask[seq_num] == 1).sum() for seq_num in range(attention_mask.size()[0])]
-        X_embed = torch.zeros((embedding.size()[0], max(seq_lens), 1024), device=self.device)
+        returned = None
         for seq_num in range(embedding.size()[0]):
-            seq_len = (attention_mask[seq_num] == 1).sum()
-            X_embed[seq_num, :seq_len - 1, :] = embedding[seq_num][:seq_len - 1][:]
-        x = X_embed
-        x = self.dropout(x)
-        x = self.average_pooling(x)
-        out = self.head(x)
-        return out
+            x = embedding[seq_num][:(attention_mask[seq_num] == 1).sum() - 1][:]
+            x = self.dropout(x.unsqueeze(0))
+            x = self.average_pooling(x)
+            out = self.head(x)
+            if returned is None:
+                returned = out
+            else:
+                returned = torch.cat((returned, out), dim=0)
+        return returned
 
     def predict(self, input_seqs):
         """
